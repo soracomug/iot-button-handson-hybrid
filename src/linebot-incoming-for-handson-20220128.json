@@ -1,0 +1,84 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+      "title" : "linebot-incoming-for-handson-20220128"
+    },
+    "schemes" : [ "https" ],
+    "paths" : {
+      "/{channel_id}" : {
+        "post" : {
+          "produces" : [ "application/json" ],
+          "parameters" : [ {
+            "name" : "channel_id",
+            "in" : "path",
+            "required" : true,
+            "type" : "string"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "200 response",
+              "schema" : {
+                "$ref" : "#/definitions/Empty"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions" : {
+      "Empty" : {
+        "type" : "object",
+        "title" : "Empty Schema"
+      }
+    }
+}
+/*
+NOTE: JSON doesn't have comment syntax, but API Gateway can import this
+
+>> Test:
+
+Path:
+9876543210
+
+Header:
+x-line-signature:G+xlgo4RDHlZT2vvYTsvf+gECxhv6Ss1hQu1I0Rbkj8=
+
+Request Body:
+{
+  "destination": "xxxxxxxxxx",
+  "events": [
+    {
+      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+      "type": "message",
+      "mode": "active",
+      "timestamp": 1462629479859,
+      "source": {
+        "type": "user",
+        "userId": "U4af4980629..."
+      },
+      "message": {
+        "id": "325708",
+        "type": "text",
+        "text": "180 120",
+        "emojis": [
+          {
+            "index": 14,
+            "length": 6,
+            "productId": "5ac1bfd5040ab15980c9b435",
+            "emojiId": "001"
+          }
+        ],
+        "mention": {
+          "mentionees": [
+            {
+              "index": 0,
+              "length": 8,
+              "userId": "U850014438e..."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+*/
