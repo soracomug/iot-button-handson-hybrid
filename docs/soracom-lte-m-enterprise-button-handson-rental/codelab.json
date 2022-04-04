@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2022-04-04T13:53:41Z",
+  "id": "soracom-lte-m-enterprise-button-handson-rental",
+  "duration": 6,
+  "title": "SORACOM LTE-M Enterprise Buttonを利用したハンズオン(貸出Ver.)",
+  "authors": "Ippei Funahara、Kenichiro KIMURA、Kenichiro Wada",
+  "summary": "会場でハンズオンに参加される方のうち、貸出のSORACOM LTE-M Enterprise Buttonを利用する場合の手順です。",
+  "source": "1tZyJeJtlPNOlkHiWCmmAo_7Ovxpng3evNFiB3TYSMns",
+  "theme": "100-basic",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "100-Basic"
+  ],
+  "tags": [],
+  "url": "soracom-lte-m-enterprise-button-handson-rental"
+}

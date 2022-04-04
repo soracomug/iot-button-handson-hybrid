@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2022-04-04T13:54:18Z",
+  "id": "soracom-lte-m-enterprise-button-handson-byol",
+  "duration": 6,
+  "title": "SORACOM LTE-M Enterprise Buttonを利用したハンズオン(持ち込みVer.)",
+  "authors": "Ippei Funahara、Kenichiro KIMURA、Kenichiro Wada",
+  "summary": "会場でハンズオンに参加される方のうち、持ち込みのSORACOM LTE-M Enterprise Buttonを利用する場合の手順です。",
+  "source": "1TGT5ZVKqa9BbpmFaYyqo8LXbxIUkKCkmyT4-_XwjTJE",
+  "theme": "100-basic",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "100-Basic"
+  ],
+  "tags": [],
+  "url": "soracom-lte-m-enterprise-button-handson-byol"
+}

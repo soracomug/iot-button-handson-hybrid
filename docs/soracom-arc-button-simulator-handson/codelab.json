@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2022-04-04T13:26:09Z",
+  "id": "soracom-arc-button-simulator-handson",
+  "duration": 31,
+  "title": "SORACOM Arc \u0026 IoTボタンシュミレータを利用したハンズオン",
+  "authors": "Ippei Funahara、Kenichiro KIMURA、Kenichiro Wada",
+  "summary": "オンラインでハンズオンに参加する方向けの、SORACOM ArcならびにIoTボタンシュミレータについての説明ならびに導入方法です。",
+  "source": "1ihZqPajaFgN8iQoSKkLoDKVmYjVSkYVZSNZUr4GuddU",
+  "theme": "100-basic",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "100-Basic"
+  ],
+  "tags": [],
+  "url": "soracom-arc-button-simulator-handson"
+}

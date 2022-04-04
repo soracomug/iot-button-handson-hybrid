@@ -1,0 +1,338 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>SORACOM LTE-M Enterprise Buttonを利用したハンズオン(貸出Ver.)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid=""></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="soracom-lte-m-enterprise-button-handson-rental"
+                  title="SORACOM LTE-M Enterprise Buttonを利用したハンズオン(貸出Ver.)"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="オンラインハンズオンを始める前に" duration="5">
+        <h2 is-upgraded>前提</h2>
+<p>このドキュメントを進めるにあたって、以下のデバイスが必要となります。</p>
+<ul>
+<li>SORACOM LTE-M Button for Enterprise (本ハンズオンではソラコムからの貸与となります)</li>
+</ul>
+<p>このドキュメントを進めるにあたって、以下のアカウントが必要となります。</p>
+<ul>
+<li>SORACOM (本ハンズオンではソラコムからの貸与となります)</li>
+<li>AWS</li>
+</ul>
+<p>このドキュメントを進めるにあたって、以下の知識が必要となります。</p>
+<ul>
+<li>AWS Lambda (Pythonのサンプルコード、モジュールは準備済)</li>
+</ul>
+<p>AWSのアカウントをお持ちでない方は https://aws.amazon.com/jp/register-flow/ から作成してください。</p>
+<h2 is-upgraded>構成図<br><img style="width: 601.70px" src="img/e9fdf5fbe94844dd.png"></h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ユーザーコンソールへのログイン手順" duration="1">
+        <p>SORACOMユーザーコンソールへのログイン手順を解説します。</p>
+<h2 is-upgraded>ユーザーコンソールへログインする</h2>
+<p>SORACOM ユーザーコンソール(SAMユーザログイン) (https://console.soracom.io/#/sam_login?coverage_type=jp) へアクセスします。SAMユーザのログイン画面が表示されますので、以下の通り入力し [ログイン] ボタンをクリックしてください。</p>
+<ul>
+<li>オペレータID : ボタンに付属しているカードに記載されているOPから始まる文字列</li>
+<li>ユーザ名 : user</li>
+<li>パスワード : Soracom0408</li>
+</ul>
+<p class="image-container"><img style="width: 497.29px" src="img/a39c17c17299b78d.png"></p>
+<p>以下のような「SIM 管理」画面が表示されたらログイン完了です。</p>
+<p class="image-container"><img style="width: 601.70px" src="img/231a64cf2d2f821.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="SIMグループ設定〜Harvest動作確認" duration="0">
+        <p>ガジェット設定を行い、動作確認として、Enterprise Button(または仮想ボタン) をクリックした際に SORACOM Harvest に対してクリックタイプを保存する方法を解説します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/sM-TbywcjTGw7MY9HYeT7nKyVoBW-rG2X8cLT2m2CJDxdpqAmf_ofq43ZYzA31ZYLxgTBzkWDlbVpVWIlX79aKv9BIdH6mjusdHeNNb5NFwgYZHdf8xtqBLUA1v7kGauSX4azLpe"></p>
+<h2 is-upgraded>ガジェット設定にて、グループを作成する。</h2>
+<ol type="1" start="1">
+<li>ユーザーコンソール(https://console.soracom.io/) の &#34;Menu&#34; から &#34;ガジェット管理&#34; の&#34;LTE-M Button for Enterprise/Plus&#34; をクリックします。<img style="width: 601.70px" src="https://lh6.googleusercontent.com/7OCXXDeA8aCHaA1bN8AxdEq2KJYDSDWdycnleofqu0_Z7A3W2bhRKrLrJSx2X_YBcYsYJ-f_NorMPA3-t9GPJm2w8AGamM0WslDZoFEuKyNJKu8oA62yKnjkAW1GeuUNU8LGMXUd"><br><img style="width: 278.50px" src="https://lh5.googleusercontent.com/QzPosfRlPjbFHm5j74-tAQZD7XyknzS2V-ablvaWj7YlrX1MC3YpUUUsP-4RUE9dpysg2Mzjxfq8AGWC_GJ5M3ELNpl8Cn6se8DRzVbS8VX83tmsJd_EHY2DpyxNDql9RDOo47Qd"></li>
+<li>&#34;デバイスを追加&#34;ボタンをクリックします。</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/U0C1QEaMV1eDXeRCaLjMMP8PGxZl_mnAoANwez0oUE1QEU5mOsk1JxTcJubONl1cP78xsALTI5ApxOcZ2vHVyhRZRPxRp3G2TIfNJ0II2FpmHWz6C4pYbOxgCobBWTTpAwdHqbfC"></p>
+<ol type="1" start="3">
+<li>今回使用するボタンが表示されているので、チェックを入れて、&#34;次へ : グループを選択&#34;をクリックします。<br>※もし、ボタン一覧に利用するボタンが表示されていない場合は、チューターにご連絡ください。<br><img style="width: 601.70px" src="https://lh4.googleusercontent.com/TmCBpGvN0pSAm5LkbNe1uarYJFDeZUDa1JyxbxgYGqGyElQNYKviyXDj9l9T3Sf5C0RgNkortkZ-NJKl7VYF5cBZXMG05wm1b68cIzMnV93pBQW5jlokqOhvuxcavXPYqDDaYKEI"></li>
+<li>新規グループを作成 を選び、グループ名に任意の名前 (たとえば &#34;handson-button&#34;)を入力して、&#34;次へ : 設定を編集&#34; をクリックします。<br><img style="width: 601.70px" src="https://lh3.googleusercontent.com/h7cxHZmQfk8E0Q-xtdb2hzE1mcnDqxVXt_Gqj_M171XUci8TJHwj5yK8voMdnW7ZjcJC0W9kewPKCQgDYNyb2u1bXwkJXjEN6Hl78bf3zH7Rem91M6r7Ub4zO07SM5Q236N5LdNM"><br></li>
+<li>可視化セクションの&#34;可視化を有効にする(SORACOM Harvest Data / Lagoon)&#34;と簡易位置測位機能セクションの&#34;位置情報を付与する(簡易位置測位機能)&#34;にチェックを入れて、画面下部の&#34;保存&#34;ボタンをクリックします。<br><img style="width: 601.70px" src="https://lh6.googleusercontent.com/JDs6Hr3a9SuypGaUmCMpZNixAdEqVSRluHvPkKmc8T_WpJS45VJ1OsC0MQNnbxE4FL_twka-9JfIlG7DJBE286os55RE0QDTmS8BKLtuT2r9a8FhfAGI2AojLbr8oI11bVXNKkRr"><br><br><img style="width: 601.70px" src="https://lh3.googleusercontent.com/5SK8InXIjpxqgR3LVxsAAjZnKbuM5jI5jAq-RQsT5tie_a8vsLFOfWECGhQuGTtLgMMJOxc5RTTBaTHbXa54r0kly33jA4VYcGeak8Jm8f0y4JfsPyW5hkTjOcpcMfDlTIQfzz7s"></li>
+<li>設定完了のダイアログが出てくれば、完了です。&#34;デバイス一覧に戻る&#34;をクリックして、デバイス一覧画面に戻ります。<br><img style="width: 450.02px" src="https://lh4.googleusercontent.com/-CeEF8q-hJ1RcYePIwsblkZUvdOBjLAP0oi_u8Jd4IDalaszTppDXXkBkpIOYL78Chyj4S2xA3msyqYMUsSucKni1TdrO_dcGnmClZxVMyQ4j98uBB1ocw0cJ1Uttx5JlWvlzsOf"><br><br><img style="width: 302.00px" src="https://lh3.googleusercontent.com/AaxXTNiFUvfDNRq6S_V8XtBpc0wb-I3VxPNDJRX_oYmHzHtY3NyAvftkUv_PBtg-umIC01bG38HNLF7CTvHVklMJ_jrtoNLG95kPFWgeKk2QZEswq5A7ldTsRdIYIhan9jOctobR"></li>
+<li>デバイス一覧にて、&#34;SIMグループを編集&#34;ボタンをクリックします。<br><img style="width: 601.70px" src="https://lh3.googleusercontent.com/bBB1Q2ZFdDESp4yQi2Sc_it-E3zRXLNuh0e9dyX2IXjFFtipSDSsApj48vj8xuhiLCwBFBbi8JtS35w4nVZaNzN8Jw-2VCXFTggfz-f5nuIJAdZUq4AJpyOpN3t81lMwwswF04uN"></li>
+<li>作成したSIMグループの設定画面に移動しますので、SORACOM Air for セルラー設定 セクションで、<strong>簡易位置測位機能</strong>がON、<strong>バイナリーパーサー</strong>がONで、フォーマットに<strong>@button</strong>と入っていることを確認します。<br><img style="width: 601.70px" src="https://lh3.googleusercontent.com/BPWB0q0uROa8ri69aCnKwSDdPKznYJi7rbODsWszxjkO4-wMWv9a_n33Pl1GkQgjTead-UKRr9YCH7KTo70kL_JCXvY0nFRYxm3IjCMNvtBVa0EHNV6Ri3yHFJk8jcS2DsWmrphm"></li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/Ju3RhaH--yZk05kNpYTA_jcW7XybwpjTvy5oKjvDZyRH00TJmu7jlxTCS3Kb1gRyn3-nHl3hF9Ci93mrgjji-X6zAl_G3nKtJZRCQUVXfHk-Q8KyzgvJRyjOBm-fkvNTKSDdgMNR"></p>
+<ol type="1" start="9">
+<li>SORACOM Harvest Data 設定セクションにて、設定がONになっていることを確認します。<br><img style="width: 601.70px" src="https://lh6.googleusercontent.com/IYT4yQX4HZtQfxUwYFJK4vKeoEMI90CvcJoBuYgkQAcTiDoE_rdTXcYcCMq8k7vneoxWrOnfbxZpnwpGRKKp9wcNf6JvMbIYW-h7Pa05HWvGVrRYoOeeYKapK7ahCLjUj9ddqhIU"></li>
+</ol>
+<h2 is-upgraded>Enterprise Button を押して Harvest を確認する</h2>
+<p>いよいよ Enterprise Button を押します。ボタンをクリックし、 LED がオレンジ色となり、数秒後に緑色となればデータの送信は成功です。</p>
+<p class="image-container"><img style="width: 570.00px" src="https://lh4.googleusercontent.com/6Iyqhfal_5bRudQuafr9EMCTIJDV8_9VzC_-xfKCPhwJ1ftG2kyq_KO3gJy7Lms_uc6zgBBa7q0bNkyJl6GOtrlIRzHAldU2TS3dKDXLwV1uoGN1rKKRhaZUq0xQovxcQVG5qp4c"></p>
+<p>Harvest 上のデータを以下の手順で確認します。</p>
+<ol type="1" start="1">
+<li>&#34;Menu&#34; から &#34;SIM 管理&#34; を選択します。<br><img style="width: 302.00px" src="https://lh3.googleusercontent.com/AaxXTNiFUvfDNRq6S_V8XtBpc0wb-I3VxPNDJRX_oYmHzHtY3NyAvftkUv_PBtg-umIC01bG38HNLF7CTvHVklMJ_jrtoNLG95kPFWgeKk2QZEswq5A7ldTsRdIYIhan9jOctobR"></li>
+<li>Enterprise Button の SIM の左端にある チェックボックスを選択し、&#34;操作&#34; =&gt; &#34;データを確認&#34; を選択します。<img style="width: 601.70px" src="https://lh6.googleusercontent.com/QTORS3u9vWp6o4lO19sq4L4eqaGzuaYxVXzu7TKfN1zY1DcxRYS-xO7cj1ibBjFAZWrGjU5-fM27c-8WBETrCvEugMbREhkZKqVLStpgqOlijZ-wqo65L46o933wek-HWrtjgBXH"><br></li>
+<li>&#34;データ&#34; 列にて、&#34;clickTypeName&#34; が &#34;SINGLE&#34; であることを確認します。<br><img style="width: 601.70px" src="https://lh4.googleusercontent.com/n_QUUhcRQTz-MNgrK-UnDWq7A33QfFU37FFO3_toqszF75NCEUtb1vgq0TkMBc0V_7VdNyTul7kpG43o2d1kBstlPeVo0ucH61c7-0UUVmGWSpOKcCQ8mqvgDrgoaJx0I26H0aHE"></li>
+<li>マップピンアイコンを選択することで表示を地図に変更して、位置情報を確認します。左上の &#34;+&#34; や &#34;-&#34; でズームを調整できます。&#34;データ&#34; にも <code>$metadata.location</code> オブジェクトとしてで位置情報が入っています。<br><img style="width: 601.70px" src="https://lh6.googleusercontent.com/fVPzQo42It--3sRQTLrJP_ScDVunpFPSV5ZyzUcKaFJFOeCPmkWeyizsdx7pALxuAXVAPJtlcAYMQcWfmCp8mek_S5QuWgH6eRj5jPid-JzXgRgls20hlvPUaW2dQLuW180_nGbe"></li>
+<li>Enterprise Button は以下 3 種類のクリックに対応しています。それぞれぜひ試してみてください。連続してデータの送信をしたい場合は Harvest の画面にて「自動更新」を &#34;ON&#34; にしてみてください。</li>
+</ol>
+<ul>
+<li>シングル: 短く(1.2 秒未満) 1 回押す</li>
+<li>ダブル: 2 秒以内にシングルクリックを 2 回行う</li>
+<li>ロング: 1.2 秒以上押し続ける。</li>
+</ul>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/JujX03J9Mu704Eaz0NztbntieBNL51fN6L5wRv0r1LMvRAwmKDeTE-K_sM9OCtvrzXHgLvaXCW-a8x0jLbBu7LG79Lpp4VENP2baEY4g5hXd6oVXqH-AcJiQakCQ-9kbfKoAXSFl"><img style="width: 601.70px" src="https://lh3.googleusercontent.com/FFhwXJzEFNS5DsbVXRsGyc3rckblgYKvuMETYSMr8GdpaM9AExfWB4Xf69th8HMYaSLKUXNR06QBg5d6iNoPLc0N2ip-kZHR8lFsGrLu_5zskI-_NIxEuARoRezO4bLhJq7lmPoB"></p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="SORACOM Funk設定〜動作確認" duration="0">
+        <p>AWS LamdaとSORACOM Funkを設定し、ボタンクリックで、デバイスが動作させるところまでを解説します。</p>
+<p>まず、利用するサービスについて解説します。</p>
+<h2 is-upgraded>SORACOM Funkについて</h2>
+<p>今回のハンズオンでは、「クラウドファンクションアダプタ SORACOM Funk」を用いてAWS LambdaのFunctionを呼び出します。</p>
+<p>SORACOM Funkについて詳しくは以下の公式ページを参照ください。<br><br><a href="https://soracom.jp/services/funk/" target="_blank">https://soracom.jp/services/funk/</a></p>
+<h3 is-upgraded>利用料金</h3>
+<p>SORACOM Funk の課金体系は、リクエスト数に応じた従量課金です。初期費用、基本料金はかかりません。</p>
+<ul>
+<li>従量課金<br>1 リクエスト(*) あたり 0.00198円</li>
+<li>無料利用枠<br>1アカウントあたり月間 50,000 リクエストまで毎月無料</li>
+</ul>
+<p>今回のハンズオンでは、ほとんどの方は無料枠の中でご利用いただけます。</p>
+<h2 is-upgraded>AWS Lambdaについて</h2>
+<p>今回のハンズオンでは、AWS Lambda(以下Lambda)を使ってデバイスにメッセージを送信します。</p>
+<p>AWS Lambdaについては以下の公式ページを参照してください。</p>
+<p><a href="https://aws.amazon.com/jp/lambda/" target="_blank">https://aws.amazon.com/jp/lambda/</a></p>
+<p>Lambdaにコードをデプロイする方法はいくつかありますが、今回は運営が準備したコードをAWSコンソールから貼り付けてデプロイします。</p>
+<h3 is-upgraded>利用料金</h3>
+<p>Lambdaの利用料金は以下の公式ページをご覧ください。<br><br><a href="https://aws.amazon.com/jp/lambda/pricing/" target="_blank">https://aws.amazon.com/jp/lambda/pricing/</a></p>
+<p>今回のハンズオンの内容は無料枠の中でご利用いただけます。翌月以降も費用が発生することはまずありませんが、不安な方はハンズオン終了後にリソースを削除してください。</p>
+<h2 is-upgraded>AWS Lambdaの設定</h2>
+<p>AWS Lambdaにデバイスへメッセージを送信するプログラムをデプロイします。</p>
+<p>まず、<a href="https://console.aws.amazon.com/" target="_blank">AWSコンソール</a>にアクセスします。右上のリージョンが「バージニア北部」になっていない場合は、プルダウンから変更してください。<br><img style="width: 601.70px" src="https://lh4.googleusercontent.com/biCK6xjFGErK3ww4eB2dmHs903Zb_bIKhPTYAp2CET-YjMGwjLHtB1O9uWWBj2wViuViBq04iUJvFlxQfJ5vUwmRkgbxbc1wezQa5L9vrZRF9P5ls-wxcNomI3Rw1gcGGQtEqKni"><br></p>
+<p>検索窓に「Lambda」と入れてLambdaのコンソールにアクセスします。<br><img style="width: 601.70px" src="https://lh4.googleusercontent.com/L0QFVJdlYph_Wa9-gJpiBP2u4pDWTWB9G1HBPtD5lxBDXH01SLxVc5BFUYk0yQ1ZupK3TjA3gKWVvsku5Vv-B5hrM7RO_hC6TEt_obSqzux1xocAh1_c0hOQJcAly-5MAN_icFL3"></p>
+<h3 is-upgraded>関数の作成</h3>
+<p>「関数の作成」を押し、新しい関数を作成します。<br><img style="width: 601.70px" src="https://lh3.googleusercontent.com/wPjzid-Q4laLqfHgFmkGhRPmCpQm6hTxyinAUttEZMbZ52IxCZWiAA_KYP18y3StNV3xDvO82TgaypIMeNOL6q_J8XRrZ-GquiltoJJMVT9KKybUVRHdU8hLcwgtuZ5S6X6v7CTP"></p>
+<p>関数のタイプで「一から作成」を選び、関数名は「soracom-techon-handson-20220408」と入力、ランタイムは「Python3.9」を選びます。それ以外の部分はデフォルトのままで「関数の作成」を押します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh6.googleusercontent.com/hn1cw2zGf5MPEk3-WxGs9m8MLuQT8AtOsnCgcydWXAm7bcSGqgNWDt75yrSYe2oBZVRZCEP5__-S0ZczJRmSL5IEJPKRsON4HpvIbGw0rGV6v_VQTtJ2BBk-Volk38YK6iuBbNHo"></p>
+<h3 is-upgraded>コードの編集</h3>
+<p>コードソースに入っているデフォルトのコードを削除し、「<a href="https://raw.githubusercontent.com/soracomug/iot-button-handson-hybrid/master/src/keiganmotor_operator.py" target="_blank">keiganmotor_operator.py</a>」の内容をそのまま貼り付けます。</p>
+<p>そして、「Deploy」ボタンを押してコードをデプロイします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/gBU6npwPHna_R996LkyZ3_DrOtDMVCA2d07tUgxUR6tG8bQsaq0llj_7NMmNZXrIvMCURMWQns1-vx81mhY7JP6_5pJN3yVyID3KKPLfvJ_E4NQbsIMMirFUUDGx80eq_ZdWQAu4"></p>
+<h3 is-upgraded>環境変数の設定</h3>
+<p>「設定」→「環境変数」→「編集」を押し、このLambda関数の環境変数を設定します。<br><img style="width: 601.70px" src="https://lh5.googleusercontent.com/Zf56cLqgbVt2cD6wUXTttc-qa3MToQ9irC6Aq_iEEZczmKKHakende-LlvRDqErVQG0snDmBDr7updCI8_6NePOUOaMIPm-7Z8KhiNsUQltGkrnRHM6pSkzggIB7X-cZ9phtGt1-"></p>
+<p>「環境変数の追加」を4回押し、キーと値を入力する枠を4個作ります。そこに以下のキーと値を入れて、「保存」を押します。<br>・ DEST_REGION_NAME → 当日運営にお問い合わせください</p>
+<p>・ DEST_ENDPOINT_URL → 当日運営にお問い合わせください</p>
+<p>・ DEST_AWS_ACCESS_KEY_ID → 当日運営にお問い合わせください</p>
+<p>・ DEST_AWS_SECRET_ACCESS_KEY → 当日運営にお問い合わせください</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/aCIe13jZw7qQRiYB2wRwL12lNCm5f577rYmIhtWhBNukewnbUCa_6e-9ePgLFVejD0mPbeyI-lgaT6Tx6J13F_SOFSiF5Q1rjHMIkxAvuQP-y0mF3gI8c13KYSqL79GTWcrgxoOc"><br></p>
+<h3 is-upgraded>タイムアウトの設定</h3>
+<p>次にLambdaの実行時間(タイムアウト)を変更します。「一般設定」から「編集」を押します。<br><img style="width: 601.70px" src="https://lh6.googleusercontent.com/nbvbK1-8khQIdLc1JF52-bp-9c5Ra5uxpCIHuaikEve5151eysJQscZxJHDLfNgHOqV_LGsU7K2PrlwwinCineKFpDxMnB7NO2k5odWO0hnPd-biBb__uniZGW1G6FrioPvQUDOf"></p>
+<p>デフォルトではタイムアウトが3秒になっているので、これを30秒に変更して「保存」を押します。<br><img style="width: 601.70px" src="https://lh6.googleusercontent.com/hj8yDyA1X5PI7La8Hhama6wR1HGpC1N4ZXJr97zPFd2Op4ETd6GYvZ4tzFG0m3tI4Z6xE7jW4KPibn81IHW_i4gKgAZOSjHO5udL52gkd81GxU_u9JPCHTzmqnOJ3SvP6x2DIpeM"><br></p>
+<h3 is-upgraded>動作テスト</h3>
+<p>保存できたら、動作テストを行います。</p>
+<p>「テスト」を押し、テストイベントの名前に「test」と入力し、JSONが記載されている部分に以下のJSONを貼り付け、「変更を保存」を押します。<br></p>
+<pre><code>{
+    &#34;clickType&#34;:2,
+    &#34;clickTypeName&#34;:&#34;SINGLE&#34;,
+    &#34;batteryLevel&#34;:1,
+    &#34;binaryParserEnabled&#34;:true
+}</code></pre>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/-7R84PG_ed0OEtq9xDRAXX3I-9uy2QWtrOnl4Vi89Wld1BZgSX2lHfeqr0Udv8dJ3l2uhEHT-MCdAlYIHDWQeKXVBAmYX_1hL6XrhnYLLFS5sA7jFBq_kUroIcFLXmsthl5YKBAw"></p>
+<p>保存したら、「テスト」ボタンを押します。下図のように、「実行結果:成功」と出ていれば成功です。<br><img style="width: 601.70px" src="https://lh4.googleusercontent.com/g25KU3nr3Nph8LmlohD63FPYi9QW4SGka1JoBIQ81DMWrg-_n03Phb9Hj3veatm3pqgAdLtAc1kcfxWMEkek66dqkI9Okl_vF1x1zC_YRlB9amtiX0IPpp_88vmw3QlyH94FmiA3"><br></p>
+<h3 is-upgraded>関数のARNの取得</h3>
+<p>Lambdaのコンソールにて、「関数のARN」をコピーしておきます。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh6.googleusercontent.com/1xyH-gBAliJYzatTKR8xyzAWm3FidPfbJQRB2unFWlIoSEbT9brtDeHsBmJfjlMnV2jqe56kHStaynC0D2GdqDGHD6uRxYaXWqq5cDVjDkz7GDZsEJu_99ueiY1yRDkr1GQ6wrXg"></p>
+<h3 is-upgraded>トラブルシューティング</h3>
+<p>設定がうまく進まないときにご覧ください。ここまでの作業が出来ている場合は次に進んでください。</p>
+<p>・コードのコピペが崩れてる、全角スペースが入ってるなどコードの問題: ファイルは文字コード UTF-8になっていますので、ファイルを開いたエディタによってはShiftJISになってしまいますと、文字化けします。エディタの設定で、UTF-8で開き直してください。</p>
+<p>・成功したけど、想定通りの動作じゃない。: keiganmotor_operator.pyの内容を貼り付けたあと、「Deploy」ボタンを押し忘れてますと、コードの変更が反映されず以下のような実行結果が表示されます。エディタ画面で「Deploy」ボタンを押してください。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/QMNydwRbpSIyyZlYyxfcJJvidP_fxLnl28HYBj_kc1t2gBRy_3GMSvHF5rknwDFpUbyX48F3ISRQ0fKoqwwEnxDzxorLsK4ULHlQeQt1lOxAyflumcZBEGZ334OW39I4ssgbUGBv"></p>
+<p>・タイムアウトエラーが出る。: タイムアウト時間が初期設定の3秒のままだと、初回起動時にタイムアウトエラーになることがあります。タイムアウト時間の変更を行ってください。</p>
+<h2 is-upgraded>IAM Roleの作成</h2>
+<p>SORACOM FunkからAWS Lambdaを呼び出すための権限であるIAM Roleを作成します。</p>
+<p>AWSのコンソールにて、検索窓に「IAM」と入力し、IAMのコンソールにアクセスします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/0HUfR_P8VG60PXkBsLCXQPCJPceTpZnolsvd1eZjxBC4gm3m5bDqp-sK2Ciy5-fc7FQYOVO6O_fGDfPFyLfMsPTkZrbWziITMu893F6jmujnWBZxy0KpwMzx9fsRITQXrdwcYmx3"></p>
+<h3 is-upgraded>IAM Roleの作成</h3>
+<p>ロールを選択します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/ERvA63rKrSlAiwNBZ3EKGq5k3SFqZbOrxrW-c6ykaGcI8fPOHvngThBobSTkLOqjQrVLeTvhK657xxDGIHtr9hGmzG4Xa8nZCqbd0LCeo8HLc_YNKmOjStsie6nzmE_YgvjCJ_8y"></p>
+<p>ロールの作成をクリックします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/74wYJZPU14TFRhtiOOiY_nRR0rXbPz7cbecCrJel22ilGFH7jkhtXjfbhkp_8tLBqlnkK9HHaGSZppW1IkYYmK_Pa_aCY5eDkiI1C69F2fTTgLb_gjx6lVSxrot_eWlUYjnXTTII"></p>
+<p>以下の項目を入力して、次へをクリックします。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>信頼されたエンティティタイプ</p>
+</td><td colspan="1" rowspan="1"><p>AWSアカウント</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>AWSアカウント</p>
+</td><td colspan="1" rowspan="1"><p>別のAWSアカウント</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>アカウントID</p>
+</td><td colspan="1" rowspan="1"><p>762707677580</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>オプション</p>
+</td><td colspan="1" rowspan="1"><p>外部IDを要求する</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>外部ID</p>
+</td><td colspan="1" rowspan="1"><p>任意(例: soracom-funk-roleid)</p>
+</td></tr>
+</table>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/8bxAKeYtvEqS5FUk8Y4PjdaK3bDjEvt2gEFe_qE7IyDPFmjxoa3r5hvmYtY2wKtcrIgVAiG6XdInPK4pu2tCwJ1b9HcixUtZqtvYzUSOW-K2lAuth4kIQpYvIc9QaQWYS6n-aQgV"></p>
+<p>「AWSLambdaRole」を検索してチェックを入れ、次へをクリックします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/snmzEJ6lF_aywF9O45TXsuzabyIOtwz1aYWZtdXVBqBNMaVL74ersENCVk-SoRUWyYiLfudFd0Z1KQR2zOAcThHuGB1dBN7zV3FyikXKm0JmvoSynoEAOhthTwwV1PdvFevzRsuQ"></p>
+<p>適当なロール名(例: soracom-techon-handson-20220408-role)を入力し、ロールを作成します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/Gu3OqFMCgY7nIou9bLBKmV6p0ns6hNoOyGIe9DvVxJ2nzCRvy_MiGJ_BHGk1f4C8ZLB8ffPyP6CK8_PYC-vvpN4EBUQv2P_bgQx9kPC7V2Hys5U95oFnS-NiTYXbwXbxbY5rpYA1"></p>
+<h3 is-upgraded>ロールARNの取得</h3>
+<p>作成したロールを表示します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/_N8WVwjeg_MhA840YS8a8O2-bQM5hv69Nk4oAvj8et1J2CpxijFWVgyl4AOy6ppucfOKjEBW9LzlQMjtIgVYSW6iLvjXSKlkoAJ4HC-yseTX3-BklFDV-rIfknAEvw4meyFQH0Wv"></p>
+<p>ロールのARNをコピーします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/88ILo-GOCezFcI9KYpwD2suIzT73bBvJQBgR67KywrNgKM31hgWexUajUuNMehPUf48kPJ4wbZrwl90GCuGQlt4fMrhz_c8Q1E7kBIhgshUmQoSzr6EMhvVU5xgv5LWMQgtaPpB0"></p>
+<h2 is-upgraded>SORACOM認証情報の登録</h2>
+<p>AWS Lambdaを呼び出すための認証情報の登録をします。</p>
+<p><a href="https://console.soracom.io/#/login" target="_blank">SORACOM ユーザーコンソール</a>にログインします。</p>
+<p>ユーザーコンソール右上のユーザー名をクリックし、「セキュリティ」を選択します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/UUPR5J6Bv3XkskNtw37FO1Gr3mgiYDENPFropkOzpNAeEy5FPI4kfSDLpWc8RYTgbhvAUqxsb7eqlrFeJJX9oZVhJyxFEsDs1CVtHaS3pDRMBV3_RQhPHnK-Woh22RFTDSbOYZ9p"></p>
+<p>認証情報ストアを開き、「認証情報を登録」をクリックします。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/8-BNgg7nx8aQgYVsjefTgEUkkjYsHToXKG0S2kihFLnKepaDJo7fBzwuAN-mH5p_kEF0YGy6pToPbcQoSFp1M5EfsZGri0iqHZ3v8umeCl9ghN0RU_A2YI2Xw8eDSWSzXz2v3NyL"></p>
+<p>以下の情報を入力し、「登録」をクリックします。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>認証情報ID</p>
+</td><td colspan="1" rowspan="1"><p>任意(例: button-function)</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>種別</p>
+</td><td colspan="1" rowspan="1"><p>AWS IAM ロール認証情報</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>ロールARN</p>
+</td><td colspan="1" rowspan="1"><p>作成したIAM RoleのARN</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>外部ID</p>
+</td><td colspan="1" rowspan="1"><p>作成したIAM Roleの外部ID(例: soracom-funk-roleid)</p>
+</td></tr>
+</table>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/eD5qmL_8N_r9mW3jlpAFSeLWZNOeE3jyDLYfL6QX68FojX7pARu5uvypN5rJqNRBPqpzDMFRPi7_7ZjoyBN4d3K53jRqTfgrQmB1WPjrfposiVhcXn3VJ2pfHgkmw-51zXYe6EmN"></p>
+<h2 is-upgraded>SORACOM Funkの設定</h2>
+<p>AWS Lambdaを呼び出すSORACOM Funkの設定をします。</p>
+<p>所属させたグループ名をクリックし、SIMグループの設定画面に移動します。</p>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/O_I1ACNB5ILo18Q088RRqij14THrjmyOLQIKJ361u7IZdEMhH7G7K5YwPU3mLfRuec4n17oiJ9l6FcuArw-MQ2jGKR7OlBhBQlvuag7jistQrUdxWTVSV_cGlH_WlIs0FJBnwMbV"></p>
+<p>SORACOM Funkの設定を開き、以下の設定を入力して「保存」をクリックします。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>設定</p>
+</td><td colspan="1" rowspan="1"><p>ON</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>サービス</p>
+</td><td colspan="1" rowspan="1"><p>AWS Lambda</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>関数のARN</p>
+</td><td colspan="1" rowspan="1"><p>AWS Lambdaの関数のARN</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>認証情報</p>
+</td><td colspan="1" rowspan="1"><p>作成した認証情報(例: button-function)</p>
+</td></tr>
+</table>
+<p class="image-container"><img style="width: 601.70px" src="https://lh4.googleusercontent.com/RhwZR-Z8AFwkRYGy7uh0jdEvEQyR8Skt0n9txPkHf98HQnH0nMrgOz9MhDa5PjM4zLV2z34oQPe0XNn1dNNESdueFWIB5sLZiHC0TP8GUJQa49aOr6EelEr24kV2n0DkAdnDtSBC"></p>
+<h2 is-upgraded>動作確認</h2>
+<p>ボタンを押してみましょう。LEDが緑点灯すれば正常にリクエストできています。<br>デバイスが動作していると思うので、確認しましょう。<br><img style="width: 437.72px" src="https://lh4.googleusercontent.com/NNLbRPnCNv9cO8j2-pejtlPTYJMAUxVWums1aDR_2Bgul_5i4X_C1Oa4IMwwKpzPaDo74b_VJh9KRw_z7r3GQizAF_ak-xqvMdkXp0wewli6Oho7WJx_N9Ct_I6tDoaArQjFT7E0"></p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="後片付け" duration="0">
+        <p>後片付けの手順を解説します。</p>
+<h2 is-upgraded>AWSリソース</h2>
+<p>AWS上のリソースは、残っていても、課金されることはありませんが、不要な場合は、以下を行ってください。<br></p>
+<ol type="1" start="1">
+<li>AWS Lambda関数の削除</li>
+<li>SORACOM Funk実行用のIAMロールの削除</li>
+</ol>
+<h2 is-upgraded>IoTボタンシュミレータの場合</h2>
+<p><br>放置しておいても、課金が発生することはありませんが、後片付けを行います。</p>
+<p>すでに今回のハンズオン以外で、Harvestなどのサービスをお使いの場合は、料金が発生しますので、不要の場合は削除を行ってください。</p>
+<p>バーチャルSIMについても、アカウントに１つだけは無料で保持できますので、そのままでも問題ありません。1つ以上お持ちの方のみ、不要の場合は削除を行ってください。</p>
+<h3 is-upgraded>WireGuardの削除</h3>
+<p>OS標準のアンインストール方法で削除します。</p>
+<h3 is-upgraded>SORACOM LTE-M Button for Enterpriseシミュレータの削除</h3>
+<p>こちらもOS標準のアンインストール方法で削除します。</p>
+<h3 is-upgraded>SIMグループの削除</h3>
+<p>SIMグループを削除するには、紐づいているSIMグループを削除してから削除する必要があります。</p>
+<ol type="1" start="1">
+<li>SIMの紐付け解除は、SIMグループの登録と同じ手順で、SIMを選択して、SIMの所属グループ変更画面を表示します。そこで、新しい所属グループで[グループ解除]を選択して、登録すれば解除されます。</li>
+</ol>
+<p class="image-container"><img style="width: 500.50px" src="https://lh6.googleusercontent.com/CmwaXb5zxyd3XSplCTX5tN4fg_ve2Rnovv0y2s_JHGXAwWIMQhRwpGDS0jSyO1kStsE7mpPekrrnnfsxoz6vyhOB0dD6Nd8H-OeGWZT2ZRiBbFPdi1IFVJDatjGlo2sLaxmmcCwZ"></p>
+<ol type="1" start="2">
+<li>SIMグループの削除は、SIMグループ設定画面右上の[削除]をクリックします。</li>
+</ol>
+<p class="image-container"><img style="width: 503.50px" src="https://lh6.googleusercontent.com/4Ry3QpD6KDfgvEZPN86T3A6Tfw_b2buBuS7zO9aBrhxYV2lzH2XZwyz_YrEzQrAwUrXY54vNTH_7fN90sgTrT7MUAGGKR0Wmj-Glnv5tr7o_GycgY8M3Y3PZy8O6AyJSA-9UqslB"></p>
+<ol type="1" start="3">
+<li>問題なければそのまま[削除する]をクリックします。これで完了です。</li>
+</ol>
+<p class="image-container"><img style="width: 508.66px" src="https://lh4.googleusercontent.com/FoJW-WJ9sPW4QAIS0YhDywDTAQ9wYuj8uLP2m8u8AYE_xhuNMBkikZm88r4qEUe0OIk5-n6nFP_V_ilB2AR3-2a5D-RCcANRqKyvQEhkafOv0nlSbdlC_74S8s8y8UGc24dwnwSC"></p>
+<p>なお、SIMの紐付けがあると、エラーになりますので、必ずSIMの紐付けを全部解除してから行ってください。</p>
+<h3 is-upgraded>バーチャルSIMの削除(すでに1つ以上バーチャルSIMがある方のみ実施してください)</h3>
+<ol type="1" start="1">
+<li>バーチャルSIMの解約は、通常のSIMの解約と同じく、SIMを選択後、画面上部の[操作 ▼]をクリックし、[解約]をクリックします。</li>
+</ol>
+<p class="image-container"><img style="width: 343.69px" src="https://lh5.googleusercontent.com/NFESp8K8PovkBouLPqV_8mZwK0bQokIDAW7XFYLCpsRbGZSNIFmXxsk3p9KOQXe8N1qjkoVqRPth-bBUINe7LQHKWyhzpzrxihAP7QXuKSJ-_G8mvGkMVEsrK0LBKXQ44YHoZMPj"></p>
+<ol type="1" start="2">
+<li>問題なければ、そのまま[解約する]をクリックしてください。</li>
+</ol>
+<p class="image-container"><img style="width: 494.50px" src="https://lh3.googleusercontent.com/nhGsEdNrnejhZ6Pun3UWUqx9N4ZTEgXt6XJdRqwcBIvGuhA384y7ZWiG15sMf3iSGtoj6A8S3O_P6wSK2FBCo-KaXvxvBwRJ5-ITN04xYEiuoTwv4KLQh9WBiagHFuZvV0lWqu0y"></p>
+<ol type="1" start="3">
+<li>SIM一覧からバーチャルSIMがなくなっていればOKです。</li>
+</ol>
+<h3 is-upgraded>IAMロール認証情報の削除</h3>
+<ol type="1" start="1">
+<li>右上のメニューからセキュリティをクリックします。<br><img style="width: 246.50px" src="https://lh3.googleusercontent.com/zS9QIh8JZUVtcZNJrdpG6thrQsBZkzyGFpyBrJwJ5CM9CWqbEij93nykAZ46AlMSnOcOuw9nM6GXLN0dkIy6vJ3P2Rd_-rkwZ1m-P6mdQjRC6PyaCwTolbaFObU0MsKZp4dgwPAT"></li>
+<li>セキュリティページの左メニューの認証情報ストアをクリックします。</li>
+</ol>
+<p class="image-container"><img style="width: 215.50px" src="https://lh5.googleusercontent.com/duVZEzEuOrMxBsCScRYUmr9ndGcC-Q7f3j7ukaCMAIQ9Z3pIYdKlls-SeFgX1E1qFfzZZ4uAuxaqek4xmeRfG-b1oRsmEuVWEugkQPXjrXVLZCox1Us-o_CW_7DYYo_sOlp5JtPc"></p>
+<ol type="1" start="3">
+<li>作成したIAMロールの右側にあるゴミ箱アイコンをクリックします。</li>
+</ol>
+<p class="image-container"><img style="width: 601.70px" src="https://lh5.googleusercontent.com/humFHUSR1ImmQr9_YqEJiX-YVPAgoLicg1YCiPXntESWCYHqv3kM16wlkImBWEXBJ2ybFBsS2ui8ijIKRUTJam3kPjcDrysN8pU4ZLfOIKjzH6VP3o4SxJuBrvuCp7LyL-5oqJa9"></p>
+<ol type="1" start="4">
+<li>ダイアログで削除ボタンをクリックします。これで削除完了です。<br><img style="width: 382.50px" src="https://lh6.googleusercontent.com/ABb_XYLC_FBeJklfkq5FUF-STwlTJ_MqnI2YRE-ehDlVnQLD8un73SxRFlPtkqmZ-UN30m4ehpHEo3kqV4jRixGonKNg936k6S9zVJguPq79GVs9Dq9M8Ndlz9kebwqgT27iKRAR"></li>
+</ol>
+<h2 is-upgraded>ボタン持ち込みの場合</h2>
+<p>このままでも、課金が発生することはありませんが、後片付けを行います。<br>後片付け(IoTボタンシュミレータ)の手順にある、以下の手順のみ行ってください</p>
+<ol type="1" start="1">
+<li>SIMグループの削除</li>
+<li>IAMロール認証情報の削除</li>
+</ol>
+<h2 is-upgraded>ボタン貸し出しの場合</h2>
+<p>貸し出しの場合、SORACOMのコンソールからログアウトして、ボタンを運営メンバーにお返しください。</p>
+
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
